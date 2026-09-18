@@ -32,10 +32,13 @@ function setTripDates() {
   const id = $("trip").value;
   const trip = trips.find(t => t.id === id);
 
-  if (!trip) return;
-
-  $("start").value = trip.start;
-  $("end").value = trip.end;
+  if (!trip) {
+    $("start").value = "";
+    $("end").value = "";
+  } else {
+     $("start").value = trip.start;
+     $("end").value = trip.end;
+  }
 
   draw.hasFit = false;
   draw();
