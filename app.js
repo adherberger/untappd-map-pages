@@ -136,12 +136,22 @@ async function init() {
     allCheckins = data.checkins || [];
     trips = data.trips || [];
     tripOptions();
-
+    
     map = L.map("map").setView([39.5, -98.35], 4);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+
+    const params = new URLSearchParams(window.location.search);
+    const tripId = params.get("trip");
+
+    if (tripId) {
+      $("trip").value = tripId;
+      setTripDates();
+
+      history.replaceState({}, "", window.location.pathname);
+    }    
 
     $("trip").addEventListener("change", setTripDates);
     $("start").addEventListener("change", () => { $("trip").value = ""; draw(); });
